@@ -22,7 +22,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         `, mySprite, 0, -100)
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.hoop, function (sprite, otherSprite) {
-    game.over(true)
+    game.over(true, effects.bubbles)
 })
 let projectile: Sprite = null
 let mySprite: Sprite = null
@@ -170,21 +170,50 @@ mySprite.setPosition(82, 111)
 mySprite.setVelocity(50, 0)
 mySprite.setBounceOnWall(true)
 let mySprite2 = sprites.create(img`
-    4 . . . . . . . . . . . . . 4 
-    4 . . . . . . . . . . . . . 4 
-    4 . . . . . . . . . . . . . 4 
-    4 . . . . . . . . . . . . . 4 
-    . 4 . . . . . . . . . . . 4 . 
-    . 4 . . . . . . . . . . . 4 . 
-    . 1 4 4 . . . . . . . 4 4 . 1 
-    1 . . 1 4 4 4 4 4 4 4 . 1 . . 
-    . . . 1 . . 1 . . 1 . . 1 . . 
-    . . . 1 . . 1 . . 1 . . 1 . . 
-    . . . . . . 1 . . 1 . . . . . 
-    . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . 
+    . 4 . . . . . . . . . . . . . 4 . 
+    . 4 . . . . . . . . . . . . . 4 . 
+    . 4 . . . . . . . . . . . . . 4 . 
+    . 4 . . . . . . . . . . . . . 4 . 
+    1 . 4 . . . . . . . . . . . 4 . 1 
+    . . 4 . . . . . . . . . . . 4 . . 
+    . . 1 4 4 . . . . . . . 4 4 . 1 . 
+    . 1 . . 1 4 4 4 4 4 4 4 . 1 . . . 
+    . . . . 1 . . 1 . . 1 . . 1 . . . 
+    . . . . 1 . . 1 . . 1 . . 1 . . . 
+    . . . . . . . 1 . . 1 . . . . . . 
+    . . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . . 
     `, SpriteKind.hoop)
 mySprite2.setPosition(75, 8)
+let tijd = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Projectile)
+tijd.setPosition(26, 25)
+let resterende_tijd = 20
+tijd.say(resterende_tijd, 1000)
+forever(function () {
+    pause(1000)
+    resterende_tijd += -1
+    tijd.say(resterende_tijd, 1000)
+    if (resterende_tijd == 0) {
+        game.over(false, effects.bubbles)
+    }
+})
